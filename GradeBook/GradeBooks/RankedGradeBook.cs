@@ -24,7 +24,7 @@ namespace GradeBook.GradeBooks
         		if (averageGrade < Students[i].AverageGrade) break;
         	}
         	// + 1 to account for zero indexing
-        	double gradePercentile = (i) / (Students.Count + 1);
+        	double gradePercentile = (i) / (Students.Count);
         	if(gradePercentile >= 0.8) return 'A';
         	else if(gradePercentile >= 0.6) return 'B';
         	else if(gradePercentile >= 0.4) return 'C';
