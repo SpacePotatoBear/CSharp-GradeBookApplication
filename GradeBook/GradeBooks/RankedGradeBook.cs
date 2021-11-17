@@ -12,7 +12,7 @@ namespace GradeBook.GradeBooks
 
         public override char GetLetterGrade(double averageGrade) {
         	if (Students.Count < 5) {
-        		throw new System.InvalidOperationException("Not enough students");
+        		//throw new System.InvalidOperationException("Not enough students");
         	}
 
             List<Student> localStudents = new List<Student>(Students);
