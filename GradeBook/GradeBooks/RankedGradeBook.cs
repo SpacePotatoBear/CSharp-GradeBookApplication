@@ -1,6 +1,7 @@
 using GradeBook.Enums;
 using System;
-using System.Linq;
+using System.Collections.Generic;
+
 namespace GradeBook.GradeBooks
 {
 	public class RankedGradeBook : BaseGradeBook 
@@ -13,8 +14,9 @@ namespace GradeBook.GradeBooks
         	if (Students.Count < 5) {
         		throw new System.InvalidOperationException("Not enough students");
         	}
-        	//var grades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
-        	Students.Sort(delegate(Student A, Student B) {
+
+            List<Student> localStudents = new List<Student>(Students);
+            localStudents.Sort(delegate(Student A, Student B) {
                 // Sorts descending
         		if(A.AverageGrade > B.AverageGrade) return -1;
         		if(A.AverageGrade == B.AverageGrade) return 0;
@@ -22,11 +24,11 @@ namespace GradeBook.GradeBooks
         	});
         	// get the index of the first member smaller than us
         	int i;
-        	for(i = 0; i < Students.Count; i++) {
-                if (averageGrade >= Students[i].AverageGrade) break;
+        	for(i = 0; i < localStudents.Count; i++) {
+                if (averageGrade >= localStudents[i].AverageGrade) break;
         	}
         	// + 1 to account for zero indexing
-        	double gradePercentile = (double)(i + 1) / (double)Students.Count;
+        	double gradePercentile = (double)(i + 1) / (double)localStudents.Count;
 
             if (gradePercentile <= 0.2) return 'A';
         	else if(gradePercentile <= 0.4) return 'B';
@@ -42,6 +44,7 @@ namespace GradeBook.GradeBooks
                 Console.WriteLine("Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.");
                 return;
             }
+
             base.CalculateStatistics();
         }
     }
